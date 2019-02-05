@@ -13,8 +13,6 @@ export default class Search {
 	    try {
 	        const res = await axios(`${proxy}${apiUrl}?key=${apiKey}&q=${this.query}`)
 	        this.result = res.data.recipes
-	        // console.log(this.result);
-	        // return this.result
 	    } catch (error) {
 	        alert(error);
 	    }
