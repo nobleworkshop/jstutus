@@ -11,7 +11,6 @@
 *.sass-cache
 node_modules/
 app/bower/
-dist/
 .tmp/
 
 # OS or Editor folders
