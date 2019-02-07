@@ -4,6 +4,9 @@ import * as searchView from './views/searchView'
 import * as recipeView from './views/recipeView'
 import { elements, renderLoader, clearLoader } from './views/base'
 
+
+// document.addEventListener('DOMContentLoaded', function(){ // Аналог $(document).ready(function(){
+ 
 /** Global state of the app 
 * - Search object
 * - Current recipe object
@@ -18,8 +21,10 @@ const state = {}
 
 const controlSearch = async () => {
 	// 1) Get query from view
-	// const query = searchView.getInput() // TODO
-	const query = 'pizza'; // TESTING
+	const query = searchView.getInput() // TODO
+	// const query = 'pizza'; // TESTING
+
+	console.log(query);
 
 	if (query) {
 		// 2) New Search object and add to state
@@ -71,14 +76,23 @@ elements.searchResPages.addEventListener('click', e => {
  * RECIPE CONTROLLER 
  */
 
- const controlRecipe = async () => {
+const controlRecipe = async () => {
  	const id = window.location.hash.replace('#', '')
- 	console.log(id)
+ 	// console.log(window.location);
+ 	// console.log(id)
+
+ 	// console.log(555);
+ 	// console.log(state);
 
  	if (id) {
  		// Prepare UI for changes
  		recipeView.clearRecipe()
 		renderLoader(elements.recipeContainer)
+
+		// Highlight selected search item
+		if ( state.search ) {
+			searchView.highlightedSelected(id)
+		}
 
  		// Create recipe object
  		state.recipe = new Recipe(id)
@@ -117,3 +131,5 @@ elements.searchResPages.addEventListener('click', e => {
 // window.addEventListener('hashchange', controlRecipe)
 // window.addEventListener('load', controlRecipe)
 ['hashchange', 'load'].forEach(event => window.addEventListener(event, controlRecipe))
+
+// });
