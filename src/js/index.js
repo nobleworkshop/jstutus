@@ -1,6 +1,7 @@
 import Search from "./models/Search"
 import Recipe from './models/Recipe'
 import * as searchView from './views/searchView'
+import * as recipeView from './views/recipeView'
 import { elements, renderLoader, clearLoader } from './views/base'
 
 /** Global state of the app 
@@ -17,7 +18,8 @@ const state = {}
 
 const controlSearch = async () => {
 	// 1) Get query from view
-	const query = searchView.getInput() // TODO
+	// const query = searchView.getInput() // TODO
+	const query = 'pizza'; // TESTING
 
 	if (query) {
 		// 2) New Search object and add to state
@@ -35,7 +37,7 @@ const controlSearch = async () => {
 			// 5) render results on UI
 			clearLoader(elements.searchRes)
 			searchView.renderResults(state.search.result);
-			console.log(state.search.result)
+			// console.log(state.search.result)
 		} catch (e) {
 			alert('Something went wrong with the search...')
 			clearLoader(elements.searchRes)
@@ -44,6 +46,12 @@ const controlSearch = async () => {
 }
 
 elements.searchForm.addEventListener('submit', e => {
+	e.preventDefault()
+	controlSearch()
+})
+
+// TESTING
+window.addEventListener('load', e => {
 	e.preventDefault()
 	controlSearch()
 })
@@ -69,22 +77,39 @@ elements.searchResPages.addEventListener('click', e => {
 
  	if (id) {
  		// Prepare UI for changes
+ 		recipeView.clearRecipe()
+		renderLoader(elements.recipeContainer)
 
  		// Create recipe object
  		state.recipe = new Recipe(id)
 
+ 		// TESTING
+ 		// window.r = state.recipe
+
  		try {
-	 		// Get recipe data
+	 		// Get recipe data and pars ingredients
 	 		await state.recipe.getRecipe()
+	 		console.log(state.recipe.ingredients);
+	 		state.recipe.parseIngredients()
+	 		console.log(state.recipe.ingredients);
 
 	 		// Calculate serving and time
 	 		await state.recipe.calcTime()
 	 		await state.recipe.calcSevings()
 
 	 		// Render the recipe
-	 		console.log(state.recipe);
+	 		// console.log(state.recipe);
+ 			// console.log(window.r.ingredients);
+ 			// recipeContainer
+			clearLoader(elements.recipeContainer)
+ 			recipeView.renderRecipe(state.recipe)
+
+ 			// TESTING 
+ 			// window.r.parseIngredients()
+ 			// console.log(window.r.ingredients);
+
  		} catch(e) {
- 			alert('Error pricessing recipe');
+ 			alert('Error processing recipe');
  		} 
  	}
  }
