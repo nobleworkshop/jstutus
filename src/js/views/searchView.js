@@ -16,8 +16,7 @@ export const highlightedSelected = id => {
 	resultsArray.forEach( el => {
 		el.classList.remove('results__link--active')
 	})
-	console.log(document.querySelector(`a[href*="${id}"]`));
-	document.querySelector(`a[href*="${id}"]`).classList.add('results__link--active')
+	document.querySelector(`.results__link[href*="${id}"]`).classList.add('results__link--active')
 }
 
 /*
@@ -26,7 +25,7 @@ acc: 0 / acc + cur.length = 5 / newTitle = ['Pasta']
 acc: 5 / acc + cur.length = 9 / newTitle = ['Pasta', 'with']
 acc: 9 / acc + cur.length = 15 / newTitle = ['Pasta', 'with', 'tomato']
 */
-const limitRecipeTitle = (title, limit = 17) => {
+export const limitRecipeTitle = (title, limit = 17) => {
 	const newTitle = []
 	if (title.length > limit ) {
 		title.split(' ').reduce((acc, cur) => {
