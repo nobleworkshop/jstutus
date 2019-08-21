@@ -15,7 +15,7 @@ import { elements, renderLoader, clearLoader } from './views/base'
 * - Liked recepies
 */ 
 const state = {}
-// window.state = state;
+window.state = state;
 
 /** 
  * SEARCH CONTROLLER 
